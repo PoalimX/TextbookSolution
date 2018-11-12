@@ -88,7 +88,8 @@ async function transferMoney() {
             let response = await fetch(url = `${_config.api.invokeUrl}/transfermoney`, {
                 method: 'POST',
                 headers: {
-                    Authorization: authToken
+                    Authorization: authToken,
+                    "Content-Type": 'application/json'
                 },
                 body: JSON.stringify(data)
             });
