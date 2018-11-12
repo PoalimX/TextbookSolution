@@ -158,6 +158,18 @@
 
 		<div role="main" class="ui-content">
 			<h2>קדימה, להעביר!</h2>
+			<div class="content-inputs">
+				<div class="content-input">
+					<label for="transfer-email">חשבון</label>
+					<input type="text" name="transfer-email" id="transfer-email" required>
+					<p class="error-message" id="transfer-email-required">חסר ערך</p>
+				</div>
+				<div class="content-input">
+					<label for="transfer-sum">סכום</label>
+					<input type="number" name="transfer-sum" id="transfer-sum" autocomplete="off" required>
+					<p class="error-message"  id="transfer-sum-required">חסר ערך</p>
+				</div>
+			</div>
 			<div class="buttons">
 				<button data-direction="reverse" class="ui-btn ui-shadow ui-corner-all" onclick="transferMoney();">העבר</button>
 				<a href="#bank-system-logged-in" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-b">חזרה</a></p>

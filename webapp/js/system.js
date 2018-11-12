@@ -78,18 +78,26 @@ if ((window.location.href.indexOf("bank-system-logged-in") > -1)) {
 }
 
 async function transferMoney() {
-    try {
-        let response = await fetch(`${_config.api.invokeUrl}/transfermoney`, {
-            method: 'POST',
-            headers: {
-                Authorization: authToken
-            }
-        });
-        let json = await response.json();
-        console.log('json transferMoney', json);
-    }
-    catch (e) {
-        alert(e.message);
+    let valid = setErrors('transfer-money');
+    if (valid) {
+        let data = {
+            username: document.querySelector('#transfer-email').value,
+            sum: document.querySelector('#transfer-sum').value
+        };
+        try {
+            let response = await fetch(url = `${_config.api.invokeUrl}/transfermoney`, {
+                method: 'POST',
+                headers: {
+                    Authorization: authToken
+                },
+                body: JSON.stringify(data)
+            });
+            let json = await response.json();
+            console.log('json transferMoney', json);
+        }
+        catch (e) {
+            alert(e.message);
+        }
     }
 }
 
@@ -107,4 +115,23 @@ async function getAllUsers() {
     catch (e) {
         alert(e.message);
     }
+}
+
+function setErrors(sectionId) {
+    let valid = true;
+    let elements = document.querySelectorAll(`#${sectionId} input`);
+    elements.forEach(element => {
+        let name = element.getAttribute('name');
+        if (element.hasAttribute('required')) {
+            let errorElm = document.querySelector(`#${name}-required`);
+            if (element.value) {
+                errorElm.classList.remove('show');
+            }
+            else {
+                errorElm.classList.add('show');
+                valid = false;
+            }
+        }
+    });
+    return valid;
 }

@@ -105,6 +105,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-bottom: 30px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -125,6 +126,7 @@
           justify-content: center;
   width: 500px;
   margin: 0 0 10px 0;
+  position: relative;
 }
 
 @media only screen and (max-width: 767px) {
@@ -150,5 +152,19 @@
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
+}
+
+.content-input .error-message {
+  display: none;
+  margin: 0;
+  color: red;
+  position: absolute;
+  top: 44px;
+  right: 124px;
+  font-size: 14px;
+}
+
+.content-input .error-message.show {
+  display: inline-block;
 }
 /*# sourceMappingURL=style.css.map */
