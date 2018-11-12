@@ -90,7 +90,8 @@ module.exports.transfermoney = async (event, context) => {
     //   input: event,
     //   username: username
     // })
-    body
+    JSON.stringify(body)
+    
   );
 };
 
