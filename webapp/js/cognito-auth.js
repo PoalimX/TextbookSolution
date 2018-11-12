@@ -1,5 +1,7 @@
 var BankApp = window.BankApp || {};
 
+var username;
+
 (function scopeWrapper($) {
     var signinUrl = '/index.html#bank-login';
 
@@ -50,6 +52,7 @@ var BankApp = window.BankApp || {};
      */
 
     function register(email, password, onSuccess, onFailure) {
+        username = email;
         var dataEmail = {
             Name: 'email',
             Value: email
@@ -68,6 +71,7 @@ var BankApp = window.BankApp || {};
     }
 
     function signin(email, password, onSuccess, onFailure) {
+        username = email;
         var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
             Username: toUsername(email),
             Password: password
@@ -81,6 +85,7 @@ var BankApp = window.BankApp || {};
     }
 
     function verify(email, code, onSuccess, onFailure) {
+        username = email;
         createCognitoUser(email).confirmRegistration(code, true, function confirmCallback(err, result) {
             if (!err) {
                 onSuccess(result);
