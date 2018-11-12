@@ -86,11 +86,11 @@ module.exports.transfermoney = async (event, context) => {
   var body = context.body;
   return buildReturnJSON(
     200,
-    // JSON.stringify({
-    //   input: event,
-    //   username: username
-    // })
-    JSON.stringify(body)
+    JSON.stringify({
+      input: event,
+      username: username
+    })
+    // JSON.stringify(body)
     
   );
 };
