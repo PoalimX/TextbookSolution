@@ -9,7 +9,6 @@
   "dependencies": {
     "http-server": "latest",
     "jasmine": "latest",
-    "jquery": "^3.3.1",
     "serverless": "latest",
     "serverless-plugin-include-dependencies": "latest"
   },
