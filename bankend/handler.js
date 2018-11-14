@@ -83,7 +83,7 @@ module.exports.ensureuserexists = async (event, context) => {
 module.exports.transfermoney = async (event, context) => {
   var username = getCognitoUser(event, context);
   var account = await Account.ensure_account_exists(username);
-  var body = context.body;
+  var body = event.body;
   console.log('transfermoney body', body);
   return buildReturnJSON(
     200,
