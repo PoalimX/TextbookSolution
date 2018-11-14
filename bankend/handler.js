@@ -89,6 +89,8 @@ module.exports.transfermoney = async (event, context) => {
   console.log('currentAccount', currentAccount);
 
   var body = event.body;
+  console.log('body', body);
+
   var transferUsername = body.username;
   console.log('transferUsername', transferUsername);
 

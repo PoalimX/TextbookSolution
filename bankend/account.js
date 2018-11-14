@@ -83,3 +83,7 @@ module.exports.getAllUsers = async (username) => {
     driver.close();
     return result.records;
 }
+
+module.exports.setBalanceByUser = async (username, balance) => {
+    
+}
