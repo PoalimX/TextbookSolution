@@ -15,8 +15,12 @@ describe("Account", function () {
         expect(balance).toEqual(7000);
     });
 
-    it("should transfer the money", async () => {
+    describe("Transfer money", () => {
+        it("should transfer the money", async () => {
 
-    });
+        });
+    })
+
+    
 });
 

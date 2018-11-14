@@ -80,13 +80,21 @@ module.exports.ensureuserexists = async (event, context) => {
 };
 
 module.exports.transfermoney = async (event, context) => {
+  try {
   var httpCode = 200;
   var message;
   var currentUsername = getCognitoUser(event, context);
+  console.log('currentUsername', currentUsername);
   var currentAccount = await Account.ensure_account_exists(currentUsername);
+  console.log('currentAccount', currentAccount);
+
   var body = event.body;
   var transferUsername = body.username;
+  console.log('transferUsername', transferUsername);
+
   var transferSum = body.sum;
+  console.log('transferSum', transferSum);
+
   await Account.ensure_account_exists(transferUsername);
   var currentBalance = await Account.get_balance_for_user(currentUsername);
   if (currentBalance < transferSum) {
@@ -102,6 +110,10 @@ module.exports.transfermoney = async (event, context) => {
     httpCode,
     JSON.stringify(data)
   );
+  }
+  catch(error) {
+    console.log('error transfermoney', error);
+  }
 };
 
 module.exports.getAllUsers = async (event, context) => {
