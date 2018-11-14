@@ -25,7 +25,7 @@ function buildReturnJSON(status, body) {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
     },
-    body: body
+    body: bodynp
   };
 }
 module.exports.hello = async (event, context) => {
@@ -88,7 +88,7 @@ module.exports.transfermoney = async (event, context) => {
   var currentAccount = await Account.ensure_account_exists(currentUsername);
   console.log('currentAccount', currentAccount);
 
-  var body = event.body;
+  var body = JSON.parse(event.body);
   console.log('body', body);
 
   var transferUsername = body.username;
