@@ -77,22 +77,30 @@ module.exports.ensureuserexists = async (event, context) => {
       })
     );
   }
-
 };
 
 module.exports.transfermoney = async (event, context) => {
-  var username = getCognitoUser(event, context);
-  var account = await Account.ensure_account_exists(username);
+  var httpCode = 200;
+  var message;
+  var currentUsername = getCognitoUser(event, context);
+  var currentAccount = await Account.ensure_account_exists(currentUsername);
   var body = event.body;
-  console.log('transfermoney body', body);
+  var transferUsername = body.username;
+  var transferSum = body.sum;
+  await Account.ensure_account_exists(transferUsername);
+  var currentBalance = await Account.get_balance_for_user(currentUsername);
+  if (currentBalance < transferSum) {
+    httpCode = 203;
+    message = 'Inficient Funds';
+  }
+
+  var data = {
+    message: message
+  }
+  // console.log('transfermoney body', body);
   return buildReturnJSON(
-    200,
-    // JSON.stringify({
-    //   input: event,
-    //   username: username
-    // })
-    JSON.stringify(body)
-    
+    httpCode,
+    JSON.stringify(data)
   );
 };
 
