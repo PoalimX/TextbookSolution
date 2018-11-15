@@ -20,7 +20,5 @@ describe("Account", function () {
 
     //     });
     // })
-
-    s
 });
 
