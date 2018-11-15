@@ -84,11 +84,11 @@ module.exports.getAllUsers = async (username) => {
     return result.records;
 }
 
-module.exports.setBalanceByUser = async (username, balance) => {
-    var driver = getNeo4jDriver();
-    const session = driver.session();
-    const result = await session.run(`MATCH (n { name: '${username}' }) SET n.balance = ${balance} RETURN n.name,n.balance`);
-    session.close();
-    driver.close();
-    return result.records;
-}
+// module.exports.setBalanceByUser = async (username, balance) => {
+//     var driver = getNeo4jDriver();
+//     const session = driver.session();
+//     const result = await session.run(`MATCH (n { name: '${username}' }) SET n.balance = ${balance} RETURN n.name,n.balance`);
+//     session.close();
+//     driver.close();
+//     return result.records;
+// }
