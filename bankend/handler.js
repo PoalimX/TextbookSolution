@@ -102,20 +102,14 @@ module.exports.transfermoney = async (event, context) => {
         }
         else {
           var currentBalanceReceiver = parseInt(await Account.get_balance_for_user(transferUsername),10);
-          console.log('currentBalanceReceiver', currentBalanceReceiver);
           var newBalanceReceiver = currentBalanceReceiver + transferSum;
-          console.log('newBalanceReceiver', newBalanceReceiver);
           var newBalanceSender = currentBalance - transferSum;
-          console.log('newBalanceSender', newBalanceSender);
           var successfullTransfer = await Account.setBalanceByUser(transferUsername, newBalanceReceiver);
           if (successfullTransfer) {
-            console.log('successfullTransfer = true');
             var successfullSubtractionOfFunds = await Account.setBalanceByUser(currentUsername, newBalanceSender);
-            console.log('successfullSubtractionOfFunds',successfullSubtractionOfFunds );
             message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} succeeded`;
           } 
           else {
-            console.log('successfullTransfer = false');
             message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} failed`;
           }
         }
