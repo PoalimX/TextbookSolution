@@ -90,5 +90,5 @@ module.exports.setBalanceByUser = async (username, balance) => {
     const result = await session.run(`MATCH (n { name: '${username}' }) SET n.balance = ${balance} RETURN n.name,n.balance`);
     session.close();
     driver.close();
-    return result.records;
+    return true;
 }

@@ -103,7 +103,23 @@ module.exports.transfermoney = async (event, context) => {
     httpCode = 203;
     message = 'Inficient Funds';
   }
-
+  else {
+    var currentBalanceReceiver = await Account.get_balance_for_user(transferUsername);
+    console.log('currentBalanceReceiver', currentBalanceReceiver);
+    var newBalanceReceiver = currentBalanceReceiver + transferSum;
+    console.log('newBalanceReceiver', newBalanceReceiver);
+    var newBalanceSender = currentBalance - transferSum;
+    console.log('newBalanceSender', newBalanceSender);
+    var successfullTransfer = await Account.setBalanceByUser(transferUsername, newBalanceReceiver);
+    if (successfullTransfer) {
+      console.log('successfullTransfer = true');
+      var successfullSubtractionOfFunds = await Account.setBalanceByUser(currentUsername, newBalanceSender);
+      console.log('successfullSubtractionOfFunds',successfullSubtractionOfFunds );
+    } 
+    else {
+      console.log('successfullTransfer = false');
+    }
+  }
   var data = {
     message: message
   }
