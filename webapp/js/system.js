@@ -79,7 +79,8 @@ if ((window.location.href.indexOf("bank-system-logged-in") > -1)) {
 
 async function transferMoney() {
     let $message = document.getElementById('transfer-money-message');
-    $message.text = '';
+    message.style.display = 'none';
+    $message.innerText = '';
     let valid = setErrors('transfer-money');
     if (valid) {
         let data = {
@@ -97,9 +98,9 @@ async function transferMoney() {
             });
             let json = await response.json();
             if (json) {
-                $message.text = json.message;
+                $message.innerText = json.message;
+                message.style.display = 'block';
             }
-            console.log('json transferMoney', json);
         }
         catch (e) {
             alert(e.message);
