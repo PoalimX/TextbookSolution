@@ -101,7 +101,7 @@ module.exports.transfermoney = async (event, context) => {
           message = 'Inficient Funds';
         }
         else {
-          var currentBalanceReceiver = paseInt(await Account.get_balance_for_user(transferUsername),10);
+          var currentBalanceReceiver = parseInt(await Account.get_balance_for_user(transferUsername),10);
           console.log('currentBalanceReceiver', currentBalanceReceiver);
           var newBalanceReceiver = currentBalanceReceiver + transferSum;
           console.log('newBalanceReceiver', newBalanceReceiver);
@@ -112,9 +112,11 @@ module.exports.transfermoney = async (event, context) => {
             console.log('successfullTransfer = true');
             var successfullSubtractionOfFunds = await Account.setBalanceByUser(currentUsername, newBalanceSender);
             console.log('successfullSubtractionOfFunds',successfullSubtractionOfFunds );
+            message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} succeeded`;
           } 
           else {
             console.log('successfullTransfer = false');
+            message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} failed`;
           }
         }
       }
