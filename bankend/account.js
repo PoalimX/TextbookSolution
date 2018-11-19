@@ -4,7 +4,7 @@ const neo4jUser = process.env.NEO4J_USER;
 const neo4jPassword = process.env.NEO4J_PASSWORD;
 const neo4jEndpoint = process.env.NEO4J_ENDPOINT;
 
-const INITIAL_BALANCE = 5000;
+const INITIAL_BALANCE = 7000;
 
 function getNeo4jDriver()
 {
@@ -17,11 +17,13 @@ function getNeo4jDriver()
 /********************************************************************** */
 // returns true/false whether account exists
 /********************************************************************** */
-async function userExists(session, username)
-{
+module.exports.userExists =  async (username) => {
+    var driver = getNeo4jDriver();
+    const session = driver.session();
     const result = await session.run("Match (n:User) WHERE n.name='"+username+"' RETURN n.name");
     var isExists = (result.records.length >= 1);
-
+    session.close();
+    driver.close();
     console.log("userExists for " + username + " result:" + isExists);
     return isExists; // true for success
 }
@@ -61,7 +63,7 @@ module.exports.ensure_account_exists = async (username) => {
     var driver = getNeo4jDriver();
     const session = driver.session();
     var result = null;
-    if (!await userExists(session, username)) {
+    if (!await this.userExists(username)) {
         result = await createUser(session, username);
     }
     else
