@@ -81,39 +81,38 @@ module.exports.ensureuserexists = async (event, context) => {
 
 module.exports.transfermoney = async (event, context) => {
   try {
-  var httpCode = 200;
-  var message = '';
-  var currentUsername = getCognitoUser(event, context);
-  console.log('currentUsername', currentUsername);
-  var currentAccount = await Account.ensure_account_exists(currentUsername);
-  console.log('currentAccount', currentAccount);
+    var httpCode = 200;
+    var message = '';
+    var currentUsername = getCognitoUser(event, context);
+    if (!await Account.userExists(currentUsername)) {
+      httpCode === 203;
+      message = `Current user ${currentUsername} doesn't exist`;
+    } else {
+      var body = JSON.parse(event.body);
+      var transferUsername = body.username;
+      var transferSum = body.sum;
+      if (!await Account.userExists(transferUsername)) {
+        httpCode === 203;
+        message = `Transfer user ${transferUsername} doesn't exist`;
+      } else {
+        var currentBalance = await Account.get_balance_for_user(currentUsername);
+        if (currentBalance < transferSum) {
+          httpCode = 203;
+          message = 'Inficient Funds';
+        }
+      }
+    }
 
-  var body = JSON.parse(event.body);
-  console.log('body', body);
-
-  var transferUsername = body.username;
-  console.log('transferUsername', transferUsername);
-
-  var transferSum = body.sum;
-  console.log('transferSum', transferSum);
-
-  await Account.ensure_account_exists(transferUsername);
-  var currentBalance = await Account.get_balance_for_user(currentUsername);
-  if (currentBalance < transferSum) {
-    httpCode = 203;
-    message = 'Inficient Funds';
+    var data = {
+      message: message
+    }
+    // console.log('transfermoney body', body);
+    return buildReturnJSON(
+      httpCode,
+      JSON.stringify(data)
+    );
   }
-
-  var data = {
-    message: message
-  }
-  // console.log('transfermoney body', body);
-  return buildReturnJSON(
-    httpCode,
-    JSON.stringify(data)
-  );
-  }
-  catch(error) {
+  catch (error) {
     console.log('error transfermoney', error);
   }
 };
