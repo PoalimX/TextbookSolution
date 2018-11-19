@@ -101,7 +101,7 @@ module.exports.transfermoney = async (event, context) => {
           message = 'Inficient Funds';
         }
         else {
-          var currentBalanceReceiver = paseInt(await Account.get_balance_for_user(transferUsername),10);
+          var currentBalanceReceiver = parseInt(await Account.get_balance_for_user(transferUsername),10);
           console.log('currentBalanceReceiver', currentBalanceReceiver);
           var newBalanceReceiver = currentBalanceReceiver + transferSum;
           console.log('newBalanceReceiver', newBalanceReceiver);
