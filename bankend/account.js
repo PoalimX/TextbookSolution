@@ -4,7 +4,7 @@ const neo4jUser = process.env.NEO4J_USER;
 const neo4jPassword = process.env.NEO4J_PASSWORD;
 const neo4jEndpoint = process.env.NEO4J_ENDPOINT;
 
-const INITIAL_BALANCE = 5000;
+const INITIAL_BALANCE = 7000;
 
 function getNeo4jDriver()
 {
