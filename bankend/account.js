@@ -17,7 +17,7 @@ function getNeo4jDriver()
 /********************************************************************** */
 // returns true/false whether account exists
 /********************************************************************** */
-module.exports.userExists =  async (session, username) => {
+module.exports.userExists =  async (username) => {
     var driver = getNeo4jDriver();
     const session = driver.session();
     const result = await session.run("Match (n:User) WHERE n.name='"+username+"' RETURN n.name");
@@ -63,7 +63,7 @@ module.exports.ensure_account_exists = async (username) => {
     var driver = getNeo4jDriver();
     const session = driver.session();
     var result = null;
-    if (!await this.userExists(session, username)) {
+    if (!await this.userExists(username)) {
         result = await createUser(session, username);
     }
     else
