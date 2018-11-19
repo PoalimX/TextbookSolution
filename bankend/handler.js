@@ -98,9 +98,14 @@ module.exports.transfermoney = async (event, context) => {
         var currentBalance = parseInt(await Account.get_balance_for_user(currentUsername),10);
         if (currentBalance < transferSum) {
           httpCode = 203;
-          message = 'Inficient Funds';
+          message = 'Insuficient Funds';
         }
         else {
+          if (transferSum < 0){
+            httpCode = 203;
+            message = 'Negative amount is not permitted';
+          }
+          else{
           var currentBalanceReceiver = parseInt(await Account.get_balance_for_user(transferUsername),10);
           var newBalanceReceiver = currentBalanceReceiver + transferSum;
           var newBalanceSender = currentBalance - transferSum;
@@ -112,6 +117,7 @@ module.exports.transfermoney = async (event, context) => {
           else {
             message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} failed`;
           }
+        }
         }
       }
     }
