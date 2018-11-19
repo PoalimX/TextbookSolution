@@ -90,18 +90,18 @@ module.exports.transfermoney = async (event, context) => {
     } else {
       var body = JSON.parse(event.body);
       var transferUsername = body.username;
-      var transferSum = body.sum;
+      var transferSum = parseInt(body.sum,10);
       if (!await Account.userExists(transferUsername)) {
         httpCode === 203;
         message = `Transfer user ${transferUsername} doesn't exist`;
       } else {
-        var currentBalance = await Account.get_balance_for_user(currentUsername);
+        var currentBalance = parseInt(await Account.get_balance_for_user(currentUsername),10);
         if (currentBalance < transferSum) {
           httpCode = 203;
           message = 'Inficient Funds';
         }
         else {
-          var currentBalanceReceiver = await Account.get_balance_for_user(transferUsername);
+          var currentBalanceReceiver = paseInt(await Account.get_balance_for_user(transferUsername),10);
           console.log('currentBalanceReceiver', currentBalanceReceiver);
           var newBalanceReceiver = currentBalanceReceiver + transferSum;
           console.log('newBalanceReceiver', newBalanceReceiver);
