@@ -60,7 +60,7 @@ module.exports.ensure_account_exists = async (username) => {
     var driver = getNeo4jDriver();
     const session = driver.session();
     var result = null;
-    if (!await userExists(session, username)) {
+    if (!await this.userExists(session, username)) {
         result = await createUser(session, username);
     }
     else
