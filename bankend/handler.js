@@ -25,7 +25,7 @@ function buildReturnJSON(status, body) {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
     },
-    body: bodynp
+    body: body
   };
 }
 module.exports.hello = async (event, context) => {
@@ -82,7 +82,7 @@ module.exports.ensureuserexists = async (event, context) => {
 module.exports.transfermoney = async (event, context) => {
   try {
   var httpCode = 200;
-  var message;
+  var message = '';
   var currentUsername = getCognitoUser(event, context);
   console.log('currentUsername', currentUsername);
   var currentAccount = await Account.ensure_account_exists(currentUsername);
