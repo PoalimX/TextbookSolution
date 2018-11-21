@@ -15,10 +15,14 @@ describe("Account", function () {
         expect(balance).toEqual(7000);
     });
 
-    // describe("Transfer money", () => {
-    //     it("should transfer the money", async () => {
+    it('should return user exists', () => {
+        var user = Account.userExists('TEST2-at-kashyoo.com');
+        expect(user).toBeTruthy();
+    });
 
-    //     });
-    // })
+    it('should return user doesn\'t exist', () => {
+        var user = Account.userExists('TEST1-at-kashyoo.com');
+        expect(user).toBeFalsy();
+    });
 });
 
