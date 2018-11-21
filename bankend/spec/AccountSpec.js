@@ -15,14 +15,14 @@ describe("Account", function () {
         expect(balance).toEqual(7000);
     });
 
-    it('should return user exists', async(() => {
+    it('should return user exists', async () => {
         var user = await Account.userExists('TEST2-at-kashyoo.com');
         expect(user).toBeTruthy();
-    }));
+    });
 
-    it('should return user doesn\'t exist', async(() => {
+    it('should return user doesn\'t exist', async () => {
         var user = await Account.userExists('TEST1-at-kashyoo.com');
         expect(user).toBeFalsy();
-    }));
+    });
 });
 
