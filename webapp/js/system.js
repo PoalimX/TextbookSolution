@@ -79,8 +79,8 @@ if ((window.location.href.indexOf("bank-system-logged-in") > -1)) {
 
 async function transferMoney() {
     let $message = document.getElementById('transfer-money-message');
-    $message.style.display = 'none';
-    $message.innerText = '';
+    $message.style.display = 'block';
+    $message.innerText = 'Loading...';
     let valid = setErrors('transfer-money');
     if (valid) {
         let data = {
@@ -99,11 +99,10 @@ async function transferMoney() {
             let json = await response.json();
             if (json) {
                 $message.innerText = json.message;
-                $message.style.display = 'block';
             }
         }
         catch (e) {
-            alert(e.message);
+            $message.innerText = e.message;
         }
     }
 }
