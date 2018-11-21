@@ -24,5 +24,12 @@ describe("Account", function () {
         var user = await Account.userExists('TEST1-at-kashyoo.com');
         expect(user).toBeFalsy();
     });
+
+    it('updates balance for user', async () => {
+        var success = await Account.setBalanceByUser('TEST1-at-kashyoo.com', 1);
+        var EventualBalance = await Account.get_balance_for_user('TEST1-at-kashyoo.com');
+        expect(EventualBalance).toEqual(1);
+        var success2 = await Account.setBalanceByUser('TEST1-at-kashyoo.com', 7000);
+    });
 });
 
