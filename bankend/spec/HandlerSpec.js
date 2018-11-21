@@ -1,11 +1,19 @@
-const Account = require('../handler');
+const Handler = require('../handler');
 
 describe("Handler", () => {
-    it ('suceeds', () => {
-        expect(true).toBeTruthy();
-    });
 
-    it ('fails', () => {
-        expect(true).toBeFalsy();
-    })
+    beforeEach(() => {
+        spyOn(Handler, 'getCognitoUser').and.returnValue('TEST2-at-kashyoo.com');
+        spyOn(Handler, 'buildReturnJSON');
+    });
+    it ('user doesn\'t exist', async () => {
+        var context = {
+            body: {
+                username: 'TEST1-at-kashyoo.com',
+                sum: 1000
+            }
+        };
+        await Handler.transfermoney({}, context);
+        expect(Handler.buildReturnJSON).toHaveBeenCalledWith(203, `Transfer user ${transferUsername} doesn't exist`);
+    });
 })

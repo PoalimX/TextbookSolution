@@ -90,41 +90,40 @@ module.exports.transfermoney = async (event, context) => {
     } else {
       var body = JSON.parse(event.body);
       var transferUsername = body.username;
-      var transferSum = parseInt(body.sum,10);
+      var transferSum = parseInt(body.sum, 10);
       if (!await Account.userExists(transferUsername)) {
         httpCode === 203;
         message = `Transfer user ${transferUsername} doesn't exist`;
       } else {
-        var currentBalance = parseInt(await Account.get_balance_for_user(currentUsername),10);
+        var currentBalance = parseInt(await Account.get_balance_for_user(currentUsername), 10);
         if (currentBalance < transferSum) {
           httpCode = 203;
           message = 'Insuficient Funds';
         }
         else {
-          if (transferSum < 0){
+          if (transferSum < 0) {
             httpCode = 203;
             message = 'Negative amount is not permitted';
           }
-          else{
-          var currentBalanceReceiver = parseInt(await Account.get_balance_for_user(transferUsername),10);
-          var newBalanceReceiver = currentBalanceReceiver + transferSum;
-          var newBalanceSender = currentBalance - transferSum;
-          var successfullTransfer = await Account.setBalanceByUser(transferUsername, newBalanceReceiver);
-          if (successfullTransfer) {
-            var successfullSubtractionOfFunds = await Account.setBalanceByUser(currentUsername, newBalanceSender);
-            message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} succeeded`;
-          } 
           else {
-            message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} failed`;
+            var currentBalanceReceiver = parseInt(await Account.get_balance_for_user(transferUsername), 10);
+            var newBalanceReceiver = currentBalanceReceiver + transferSum;
+            var newBalanceSender = currentBalance - transferSum;
+            var successfullTransfer = await Account.setBalanceByUser(transferUsername, newBalanceReceiver);
+            if (successfullTransfer) {
+              var successfullSubtractionOfFunds = await Account.setBalanceByUser(currentUsername, newBalanceSender);
+              message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} succeeded`;
+            }
+            else {
+              message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} failed`;
+            }
           }
-        }
         }
       }
     }
     var data = {
       message: message
     }
-    // console.log('transfermoney body', body);
     return buildReturnJSON(
       httpCode,
       JSON.stringify(data)
