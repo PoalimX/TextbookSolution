@@ -113,6 +113,7 @@ module.exports.transfermoney = async (event, context) => {
             if (successfullTransfer) {
               var successfullSubtractionOfFunds = await Account.setBalanceByUser(currentUsername, newBalanceSender);
               message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} succeeded`;
+              await Account.setRelationships(currentUsername, transferUsername, balance);
             }
             else {
               message = `The transfer from ${currentUsername} to ${transferUsername} for ${transferSum} failed`;
