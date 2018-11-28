@@ -115,34 +115,6 @@ module.exports.setRelationships = async (fromUser, toUser, balance) => {
     return true;
 };
 
-
-
-/*
-MATCH (lastevent:Event) where NOT (lastevent)-[:next]->()
-CREATE (newevent:Event { sum: '1700'})
-create (lastevent)-[:next]->(newevent)
-with newevent
-MATCH (from:User { name: 'FleishD-at-gmail.com' })
-MATCH (to:User { name: 'badulina-at-gmail.com' })
-create (from)-[:from]->(newevent)<-[:to]-(to)
-*/
-
-/*
-// Create or merge UniqueId node
-MERGE (id:UniqueId{name:'Event'})
-ON CREATE SET id.count = 1
-ON MATCH SET id.count = id.count + 1
-WITH id.count AS uid
-// create Person node
-MATCH (lastevent:Event) where NOT (lastevent)-[:next]->()
-CREATE (newevent:Event { sum: '1700', id:uid})
-create (lastevent)-[:next]->(newevent)
-with newevent
-MATCH (from:User { name: 'FleishD-at-gmail.com' })
-MATCH (to:User { name: 'badulina-at-gmail.com' })
-create (from)-[:from]->(newevent)<-[:to]-(to)
-*/
-
 /*
 MERGE (id:UniqueId{name:'Event'})
 ON CREATE SET id.count = 1
