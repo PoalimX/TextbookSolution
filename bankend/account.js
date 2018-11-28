@@ -100,7 +100,6 @@ module.exports.setRelationships = async (fromUser, toUser, balance) => {
     ON CREATE SET id.count = 1
     ON MATCH SET id.count = id.count + 1
     WITH id.count AS uid
-    // create Person node
     MERGE (dummyEvent:Event{id:0})
     WITH uid
     MATCH (lastevent:Event) where NOT (lastevent)-[:next]->()
