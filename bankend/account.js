@@ -95,7 +95,7 @@ module.exports.setBalanceByUser = async (username, balance) => {
 module.exports.setRelationships = async (fromUser, toUser, balance) => {
     var driver = getNeo4jDriver();
     const session = driver.session();
-
+    var timestamp = date.now();
     await session.run(`MERGE (id:UniqueId{name:'Event'})
     ON CREATE SET id.count = 1
     ON MATCH SET id.count = id.count + 1
@@ -103,7 +103,7 @@ module.exports.setRelationships = async (fromUser, toUser, balance) => {
     MERGE (dummyEvent:Event{id:0})
     WITH uid
     MATCH (lastevent:Event) where NOT (lastevent)-[:next]->()
-    CREATE (newevent:Event { sum: ${balance}, id:uid})
+    CREATE (newevent:Event { timestamp: ${timestamp}, sum: ${balance}, id:uid})
     create (lastevent)-[:next]->(newevent)
     with newevent
     MATCH (from:User { name: '${fromUser}' })
