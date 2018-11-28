@@ -95,7 +95,8 @@ module.exports.setBalanceByUser = async (username, balance) => {
 module.exports.setRelationships = async (fromUser, toUser, balance) => {
     var driver = getNeo4jDriver();
     const session = driver.session();
-    var timestamp = date.now();
+    var timestamp = Date.now();
+    console.log("timestamp" + timestamp);
     await session.run(`MERGE (id:UniqueId{name:'Event'})
     ON CREATE SET id.count = 1
     ON MATCH SET id.count = id.count + 1
